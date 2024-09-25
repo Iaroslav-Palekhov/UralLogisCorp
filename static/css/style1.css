@@ -1,0 +1,150 @@
+body {
+    background-color: rgb(0, 0, 0);
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: blue;
+    text-align: center;
+}
+
+h3 {
+    color: green;
+    text-align: center;
+}
+
+p {
+    color: rgb(43, 58, 219);
+    text-align: center;
+}
+
+.button {
+    background-color: blue; /* Синий цвет */
+    color: white; /* Белый текст */
+    padding: 10px 20px; /* Отступы */
+    border: none; /* Убираем рамку */
+    border-radius: 25px; /* Закругленные углы */
+    text-decoration: none; /* Убираем подчеркивание */
+    display: inline-block; /* Для корректного отображения */
+    margin-top: 20px; /* Отступ сверху */
+    text-align: center;
+    transition: transform 0.6s; /* Плавный переход для трансформации */
+    perspective: 1000px; /* Устанавливаем перспективу для 3D эффекта */
+}
+.button:hover {
+    transform: rotateY(360deg); /* Переворот по оси Y при наведении */
+}
+
+.hamburger {
+    position: fixed; /* Фиксированное положение */
+    top: 20px; /* Отступ сверху */
+    right: 20px; /* Отступ справа */
+    cursor: pointer; /* Указатель при наведении */
+    z-index: 1000; /* Убедитесь, что кнопка выше других элементов */
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    margin: 20px;
+    transition: transform 0.3s;
+}
+
+.bar {
+    height: 5px;
+    width: 100%;
+    background-color: #fb0606;
+    margin: 3px 0;
+}
+
+.menu {
+    display: flex; /* Измените на flex, чтобы использовать opacity */
+    opacity: 0; /* Начальное состояние - скрыто */
+    transform: translateY(-100%); /* Начальная позиция - выше экрана */
+    transition: opacity 1s ease, transform 1s ease; /* Плавный переход для opacity и transform */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50vh;
+    background-color: rgba(178, 248, 8, 1);
+    border-radius: 0 0 50% 50%;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Вертикальное выравнивание */
+    visibility: hidden; /* Скрыто по умолчанию */
+}
+
+.menu a {
+    padding: 15px;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.menu a:hover {
+    background-color: #08f888; /* Цвет при наведении */
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 30px solid #ff0000;
+    position: absolute; /* Изменено на absolute для правильного позиционирования */
+    top: 10px; /* Позиция треугольника */
+    left: 0; /* Позиция треугольника */
+    display: none; /* Скрыто по умолчанию */
+}
+
+.letter {
+    position: absolute;
+    top: 5px; /* Позиция буквы "Р" */
+    left: 5px; /* Позиция буквы "Р" */
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: black;
+    z-index: 1; /* Убедитесь, что кнопка закрытия выше других элементов */
+}
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px); /* Первая полоска поворачивается и смещается */
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0; /* Вторая полоска исчезает */
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px); /* Третья полоска поворачивается и смещается */
+}
+
+.bar {
+    height: 5px;
+    width: 100%;
+    background-color: #fb0606;
+    margin: 3px 0;
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Плавный переход для трансформации и прозрачности */
+}
+
+
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 100px; /* Установите нужную ширину */
+    height: auto; /* Сохраняет пропорции изображения */
+    margin-right: 20px; /* Отступ между логотипом и гамбургером */
+}

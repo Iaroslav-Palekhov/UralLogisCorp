@@ -1,0 +1,113 @@
+body{
+    background-color: rgb(1, 99, 121);
+}
+h1{
+    color: blue;
+    text-align: center;
+}
+h3{
+    color: red;
+    text-align: center;
+}
+p{
+    color: rgb(43, 58, 219);
+    text-align: center;
+}
+.button {
+    background-color: blue; /* Синий цвет */
+    color: white; /* Белый текст */
+    padding: 10px 20px; /* Отступы */
+    border: none; /* Убираем рамку */
+    border-radius: 25px; /* Закругленные углы */
+    text-decoration: none; /* Убираем подчеркивание */
+    display: inline-block; /* Для корректного отображения */
+    margin-top: 20px; /* Отступ сверху */
+    text-align: center;
+}
+.profbutton {
+    background-color: rgb(154, 154, 248); /* Синий цвет */
+    color: white; /* Белый текст */
+    padding: 10px 20px; /* Отступы */
+    border: none; /* Убираем рамку */
+    border-radius: 10px; /* Закругленные углы */
+    text-decoration: none; /* Убираем подчеркивание */
+    display: inline-block; /* Для корректного отображения */
+    margin-top: 20px; /* Отступ сверху */
+    text-align: justify;
+}
+body {
+    font-family: Arial, sans-serif;
+}
+.menu {
+    display: none; /* Скрываем меню по умолчанию */
+    position: absolute;
+    top: 50px; /* Отступ сверху */
+    right: 20px; /* Отступ справа */
+    background-color: rgb(59, 4, 98); /* Цвет фона меню */
+    border: 1px solid #ccc; /* Рамка меню */
+    border-radius: 5px; /* Закругленные углы */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень */
+    z-index: 1000; /* Чтобы меню было поверх других элементов */
+}
+.menu a {
+    display: block; /* Каждая кнопка занимает всю ширину */
+    padding: 10px 15px; /* Отступы */
+    text-decoration: none; /* Убираем подчеркивание */
+    color: black; /* Цвет текста */
+}
+.menu a:hover {
+    background-color: #08eefa; /* Цвет фона при наведении */
+}
+.hamburger {
+    cursor: pointer; /* Указатель при наведении */
+    position: absolute;
+    top: 20px; /* Отступ сверху */
+    right: 20px; /* Отступ справа */
+    width: 30px; /* Ширина кнопки */
+    height: 20px; /* Высота кнопки */
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение полосок */
+    justify-content: space-between; /* Пробел между полосками */
+}
+.bar {
+    height: 4px; /* Высота полоски */
+    background-color: black; /* Цвет полоски */
+    transition: all 0.3s; /* Плавный переход */
+}
+
+
+.hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+}
+
+.bar {
+    height: 4px;
+    width: 100%;
+    background-color: black;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.menu {
+    display: none; /* Скрываем меню по умолчанию */
+}
+
+.menu.active {
+    display: block; /* Показываем меню, когда оно активно */
+}

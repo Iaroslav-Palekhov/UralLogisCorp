@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style1.css">
+    <script src="static/js/index1.js" defer></script>
+    <title>UralLogisCorp</title>
+</head>
+<body>
+<div class="header">
+    <img src="static/img/ULC.png" alt="Логотип" class="logo">
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</div>
+<div class="menu" id="menu">
+    <a href="index.html">Главная</a>
+    <a href="order.html">Заказать</a>
+    <a href="about.html">О нас</a>
+    <a href="prof.html">Профиль</a>
+</div>
+
+<h1>Добро пожаловать в UralLogisCorp</h1>
+<p>UralLogisCorp — это надежная логистическая компания, предоставляющая широкий спектр услуг по доставке грузов по всей России и за ее пределами. Мы стремимся обеспечить высокое качество обслуживания и удовлетворение потребностей наших клиентов.</p>
+<h1>Наши грузовики:</h1>
+
+
+<!-- Карусель Bootstrap -->
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="static/img/i.png" class="d-block w-100" alt="Грузовик 1">
+        </div>
+        <div class="carousel-item">
+            <img src="static/img/2.jpg" class="d-block w-100" alt="Грузовик 2">
+        </div>
+        <div class="carousel-item">
+            <img src="static/img/3.jpg" class="d-block w-100" alt="Грузовик 3">
+        </div>
+        <div class="carousel-item">
+            <img src="static/img/5.jpg" class="d-block w-100" alt="Грузовик 4">
+        </div>
+        <div class="carousel-item">
+            <img src="static/img/6.png" class="d-block w-100" alt="Грузовик 5">
+        </div>
+        <div class="carousel-item">
+            <img src="static/img/7.jpeg" class="d-block w-100" alt="Грузовик 6">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<h3>Контакты:</h3>
+<a class="button" href="tel:+79270836059">Позвонить</a>
+<a class="button" href="mailto:palekhov2008@internet.ru">Написать на почту</a>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function calculateCost() {
+        const cityFrom = document.getElementById('city-from').value;
+        const cityTo = document.getElementById('city-to').value;
+        const weight = parseFloat(document.getElementById('weight').value);
+
+        // Пример расстояний между городами (в километрах)
+        const distances = {
+            'Москва': { 'Санкт-Петербург': 700, 'Екатеринбург': 1700, 'Новосибирск': 3000, 'Казань': 800, 'Челябинск': 1800, 'Нижний Новгород': 400, 'Самара': 1000, 'Омск': 2500, 'Ростов-на-Дону': 1000, 'Уфа': 1300 },
+            'Санкт-Петербург': { 'Москва': 700, 'Екатеринбург': 1700, 'Новосибирск': 3000, 'Казань': 800, 'Челябинск': 2000, 'Нижний Новгород': 400, 'Самара': 1200, 'Омск': 3200, 'Ростов-на-Дону': 1200, 'Уфа': 1500 },
+            'Екатеринбург': { 'Москва': 1700, 'Санкт-Петербург': 1700, 'Новосибирск': 1400, 'Казань': 800, 'Челябинск': 200, 'Нижний Новгород': 1000, 'Самара': 800, 'Омск': 600, 'Ростов-на-Дону': 1700, 'Уфа': 400 },
+            'Новосибирск': { 'Москва': 3000, 'Санкт-Петербург': 3000, 'Екатеринбург': 1400, 'Казань': 1500, 'Челябинск': 2000, 'Нижний Новгород': 2500, 'Самара': 2000, 'Омск': 600, 'Ростов-на-Дону': 3000, 'Уфа': 2000 },
+            'Казань': { 'Москва': 800, 'Санкт-Петербург': 800, 'Екатеринбург': 800, 'Новосибирск': 1500, 'Челябинск': 1000, 'Нижний Новгород': 300, 'Самара': 400, 'Омск': 2000, 'Ростов-на-Дону': 1200, 'Уфа': 600 },
+            'Челябинск': { 'Москва': 1800, 'Санкт-Петербург': 2000, 'Екатеринбург': 200, 'Новосибирск': 2000, 'Казань': 1000, 'Нижний Новгород': 1300, 'Самара': 1200, 'Омск': 2500, 'Ростов-на-Дону': 1500, 'Уфа': 300 },
+            'Нижний Новгород': { 'Москва': 400, 'Санкт-Петербург': 400, 'Екатеринбург': 1000, 'Новосибирск': 2500, 'Казань': 300, 'Челябинск': 1300, 'Самара': 600, 'Омск': 2800, 'Ростов-на-Дону': 1200, 'Уфа': 800 },
+            'Самара': { 'Москва': 1000, 'Санкт-Петербург': 1200, 'Екатеринбург': 800, 'Новосибирск': 2000, 'Казань': 400, 'Челябинск': 1200, 'Нижний Новгород': 600, 'Омск': 2200, 'Ростов-на-Дону': 1000, 'Уфа': 700 },
+            'Омск': { 'Москва': 2500, 'Санкт-Петербург': 3200, 'Екатеринбург': 600, 'Новосибирск': 600, 'Казань': 2000, 'Челябинск': 2500, 'Нижний Новгород': 2800, 'Самара': 2200, 'Ростов-на-Дону': 3000, 'Уфа': 2000 },
+            'Ростов-на-Дону': { 'Москва': 1000, 'Санкт-Петербург': 1200, 'Екатеринбург': 1700, 'Новосибирск': 3000, 'Казань': 1200, 'Челябинск': 1500, 'Нижний Новгород': 1200, 'Самара': 1000, 'Омск': 3000, 'Уфа': 1500 },
+            'Уфа': { 'Москва': 1300, 'Санкт-Петербург': 1500, 'Екатеринбург': 400, 'Новосибирск': 2000, 'Казань': 600, 'Челябинск': 300, 'Нижний Новгород': 800, 'Самара': 700, 'Омск': 2000, 'Ростов-на-Дону': 1500 }
+        };
+
+        if (distances[cityFrom] && distances[cityFrom][cityTo]) {
+            const distance = distances[cityFrom][cityTo];
+            const cost = distance * weight * 0.2; // 0.2 рубля за километр
+            document.getElementById('result').textContent = `Стоимость доставки: ${cost} рублей`;
+
+            // Сохраняем заказ в localStorage
+            saveOrder(cityFrom, cityTo, weight, cost);
+        } else {
+            document.getElementById('result').textContent = 'Расстояние между указанными городами не найдено.';
+        }
+    }
+
+    function saveOrder(cityFrom, cityTo, weight, cost) {
+        const order = `Отправление из: ${cityFrom}, Назначение: ${cityTo}, Вес: ${weight} кг, Стоимость: ${cost} рублей`;
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.push(order);
+        localStorage.setItem('orders', JSON.stringify(orders));
+
+        // Перенаправление на страницу myorder.html
+        window.location.href = 'myorder.html';
+    }
+
+    function toggleMenu() {
+        const menu = document.getElementById('menu');
+        const hamburger = document.getElementById('hamburger');
+
+        // Переключаем класс 'active' для гамбургера
+        hamburger.classList.toggle('active');
+
+        // Проверяем, открыто ли меню
+        if (menu.style.visibility === 'visible') {
+            menu.style.opacity = '0';
+            menu.style.transform = 'translateY(-100%)';
+            menu.style.visibility = 'hidden';
+        } else {
+            menu.style.visibility = 'visible';
+            setTimeout(() => {
+                menu.style.opacity = '1';
+                menu.style.transform = 'translateY(0)';
+            }, 10); // Небольшая задержка для плавного появления
+        }
+    }
+</script>
+
+<style>
+    body {
+        background-color: whitesmoke;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        color: #0004ff;
+        text-align: center;
+    }
+
+    h3 {
+        color: #57B1F6;
+        text-align: center;
+    }
+
+    p {
+        color: #60FF4E;
+        text-align: center;
+    }
+
+    .button {
+        background-color: #39AAFF; /* Синий цвет */
+        color: white; /* Белый текст */
+        padding: 10px 20px; /* Отступы */
+        border: none; /* Убираем рамку */
+        border-radius: 25px; /* Закругленные углы */
+        text-decoration: none; /* Убираем подчеркивание */
+        display: inline-block; /* Для корректного отображения */
+        margin-top: 20px; /* Отступ сверху */
+        text-align: center;
+        transition: transform 0.6s; /* Плавный переход для трансформации */
+        perspective: 1000px; /* Устанавливаем перспективу для 3D эффекта */
+    }
+    .button:hover {
+        transform: rotateY(360deg); /* Переворот по оси Y при наведении */
+    }
+
+    .hamburger {
+        position: fixed; /* Фиксированное положение */
+        top: 20px; /* Отступ сверху */
+        right: 20px; /* Отступ справа */
+        cursor: pointer; /* Указатель при наведении */
+        z-index: 1001; /* Убедитесь, что кнопка выше других элементов */
+        display: flex;
+        flex-direction: column;
+        width: 30px;
+        margin: 20px;
+        transition: transform 0.3s;
+    }
+
+    .bar {
+        height: 4px;
+        width: 100%;
+        background-color: black;
+        margin: 3px 0;
+    }
+
+    .menu {
+        display: flex; /* Измените на flex, чтобы использовать opacity */
+        opacity: 0; /* Начальное состояние - скрыто */
+        transform: translateY(-100%); /* Начальная позиция - выше экрана */
+        transition: opacity 1s ease, transform 1s ease; /* Плавный переход для opacity и transform */
+        position: fixed; /* Изменено на fixed, чтобы оставаться на месте */
+        top: 0; /* Позиция меню */
+        left: 0;
+        right: 0;
+        height: 50vh;
+        background-color: yellow;
+        border-radius: 0 0 50% 50%;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; /* Вертикальное выравнивание */
+        visibility: hidden; /* Скрыто по умолчанию */
+        z-index: 1000; /* Убедитесь, что меню ниже гамбургера */
+    }
+
+    .menu a {
+        padding: 15px;
+        cursor: pointer;
+        color: black;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .menu a:hover {
+        background-color: #ffdf61; /* Цвет при наведении */
+    }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 24px;
+        cursor: pointer;
+        color: black;
+        z-index: 1; /* Убедитесь, что кнопка закрытия выше других элементов */
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px); /* Первая полоска поворачивается и смещается */
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0; /* Вторая полоска исчезает */
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px); /* Третья полоска поворачивается и смещается */
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        width: 100px; /* Установите нужную ширину */
+        height: auto; /* Сохраняет пропорции изображения */
+        margin-right: 20px; /* Отступ между логотипом и гамбургером */
+    }
+    .label{
+        color: aqua;
+    }
+</style>
+</body>
+</html>

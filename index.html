@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UralLogisCorp</title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=youre api key&lang=ru_RU" type="text/javascript"></script>
+    <link rel="stylesheet" href="static/css/style1.css">
+    <script src="static/js/index1.js" defer></script>
+    <script>
+        let myMap;
+        let marker;
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const hamburger = document.getElementById('hamburger');
+
+            hamburger.classList.toggle('active');
+
+            if (menu.style.visibility === 'visible') {
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(-100%)';
+                menu.style.visibility = 'hidden';
+            } else {
+                menu.style.visibility = 'visible';
+                setTimeout(() => {
+                    menu.style.opacity = '1';
+                    menu.style.transform = 'translateY(0)';
+                }, 10);
+            }
+        }
+
+        function initMap() {
+            myMap = new ymaps.Map("map", {
+                center: [53.629959, 55.934464],
+                zoom: 10
+            });
+
+            // Добавляем фиксированный маркер на заданные координаты
+            const initialCoords = [53.629959, 55.934464];
+            addMarker(initialCoords);
+        }
+
+        function addMarker(coords) {
+            // Удаляем предыдущий маркер, если он существует
+            if (marker) {
+                myMap.geoObjects.remove(marker);
+            }
+
+            // Создаем новый маркер
+            marker = new ymaps.Placemark(coords, {}, {
+                preset: 'islands#icon',
+                iconColor: '#ff0000' // Красный цвет
+            });
+            myMap.geoObjects.add(marker);
+        }
+
+        window.onload = function() {
+            ymaps.ready(initMap);
+        };
+    </script>
+    <style>
+        body {
+            /*background-color: rgb(0, 0, 0);*/
+            background-color: whitesmoke;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #0e24e5;
+            text-align: center;
+        }
+
+        h3 {
+            color: #57B1F6;
+            text-align: center;
+        }
+
+        p {
+            color: #9494FF;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #39AAFF; /* Синий цвет */
+            color: white; /* Белый текст */
+            padding: 10px 20px; /* Отступы */
+            border: none; /* Убираем рамку */
+            border-radius: 25px; /* Закругленные углы */
+            text-decoration: none; /* Убираем подчеркивание */
+            display: inline-block; /* Для корректного отображения */
+            margin-top: 20px; /* Отступ сверху */
+            text-align: center;
+            transition: transform 0.6s; /* Плавный переход для трансформации */
+            perspective: 1000px; /* Устанавливаем перспективу для 3D эффекта */
+        }
+        .button:hover {
+            transform: rotateY(360deg);/* Переворот по оси Y при наведении */
+        }
+
+        .hamburger {
+            position: fixed; /* Фиксированное положение */
+            top: 20px; /* Отступ сверху */
+            right: 20px; /* Отступ справа */
+            cursor: pointer; /* Указатель при наведении */
+            z-index: 1001; /* Убедитесь, что кнопка выше других элементов */
+            display: flex;
+            flex-direction: column;
+            width: 30px;
+            margin: 20px;
+            transition: transform 0.3s;
+        }
+
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: black;
+            margin: 3px 0;
+        }
+
+        .menu {
+            display: flex; /* Измените на flex, чтобы использовать opacity */
+            opacity: 0; /* Начальное состояние - скрыто */
+            transform: translateY(-100%); /* Начальная позиция - выше экрана */
+            transition: opacity 1s ease, transform 1s ease; /* Плавный переход для opacity и transform */
+            position: fixed; /* Изменено на fixed, чтобы оставаться на месте */
+            top: 0; /* Позиция меню */
+            left: 0;
+            right: 0;
+            height: 50vh;
+            background-color: yellow;
+            border-radius: 0 0 50% 50%;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Вертикальное выравнивание */
+            visibility: hidden; /* Скрыто по умолчанию */
+            z-index: 1000; /* Убедитесь, что меню ниже гамбургера */
+        }
+
+        .menu a {
+            padding: 15px;
+            cursor: pointer;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .menu a:hover {
+            background-color: #FFC661; /* Цвет при наведении */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            z-index: 1; /* Убедитесь, что кнопка закрытия выше других элементов */
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px); /* Первая полоска поворачивается и смещается */
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0; /* Вторая полоска исчезает */
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px); /* Третья полоска поворачивается и смещается */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px; /* Установите нужную ширину */
+            height: auto; /* Сохраняет пропорции изображения */
+            margin-right: 20px; /* Отступ между логотипом и гамбургером */
+        }
+
+        #map {
+            width: 100%; /* Ширина карты */
+            height: 400px; /* Высота карты */
+            margin: 20px auto; /* Центрирование карты */
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="static/img/ULC.png" alt="Логотип" class="logo">
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</div>
+<div class="menu" id="menu">
+    <a href="index.html">Главная</a>
+    <a href="order.html">Заказать</a>
+    <a href="about.html">О нас</a>
+    <a href="prof.html">Профиль</a>
+    <!--<a href="/index1.html">RedWeb</a>-->
+</div>
+<h1>UralLogisCorp</h1>
+<h3>Быстрая и надежная доставка</h3>
+<h3>"Мы гарантируем доставку ваших грузов в срок, благодаря нашей сети проверенных партнеров и современным технологиям отслеживания. С нами вы можете быть уверены, что ваш товар будет в целости и сохранности."</h3>
+<h3>"Каждый клиент для нас уникален. Мы разрабатываем индивидуальные логистические решения, учитывающие особенности вашего бизнеса, чтобы оптимизировать затраты и повысить эффективность."</h3>
+<h3>"От хранения до доставки — мы предлагаем полный спектр логистических услуг под ключ. Вам не нужно беспокоиться о дополнительных поставщиках, мы позаботимся обо всем!"</h3>
+<h3>"Наша команда состоит из опытных специалистов, которые готовы помочь вам в любой ситуации. Мы обеспечиваем высокий уровень сервиса и поддержку на каждом этапе."</h3>
+<h1>Наш офис</h1>
+
+<!-- Блок для Яндекс.Карт -->
+<div id="map"></div>
+</body>
+</html>

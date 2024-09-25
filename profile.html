@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/style1.css">
+    <script src="static/js/index1.js" defer></script>
+    <title>Профиль - UralLogisCorp</title>
+    <style>
+        .avatar {
+            width: 70px; /* Ширина аватара */
+            height: 70px; /* Высота аватара */
+            border-radius: 50%; /* Круглая форма */
+            object-fit: cover; /* Обеспечивает обрезку изображения */
+            border: 2px solid #ccc; /* Граница аватара */
+        }
+        .orders {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // Получаем данные из localStorage
+            const username = localStorage.getItem('username');
+            const email = localStorage.getItem('email');
+            const avatar = localStorage.getItem('avatar');
+
+            // Отображаем данные на странице
+            document.getElementById('username-display').textContent = username;
+            document.getElementById('email-display').textContent = email;
+
+            // Отображаем аватар
+            if (avatar) {
+                document.getElementById('avatar-display').src = avatar;
+            }
+        }
+
+        function deleteAccount() {
+            // Удаляем данные из localStorage
+            localStorage.removeItem('username');
+            localStorage.removeItem('email');
+            localStorage.removeItem('avatar');
+            localStorage.removeItem('orders'); // Удаляем заказы
+
+            // Обновляем отображение на странице
+            document.getElementById('username-display').textContent = '';
+            document.getElementById('email-display').textContent = '';
+            document.getElementById('avatar-display').src = '';
+            document.getElementById('orders-display').innerHTML = ''; // Очищаем заказы
+
+            // Можно добавить уведомление о том, что аккаунт удален
+            alert('Ваш аккаунт был удален.');
+        }
+
+        function changeAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Сохраняем изображение в localStorage
+                    localStorage.setItem('avatar', e.target.result);
+                    // Обновляем отображение аватара
+                    document.getElementById('avatar-display').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showOrders() {
+            // Переход на страницу myorder.html
+            window.location.href = 'myorder.html';
+        }
+    </script>
+    <script>
+         function toggleMenu() {
+    const menu = document.getElementById('menu');
+    const hamburger = document.getElementById('hamburger');
+
+    // Переключаем класс 'active' для гамбургера
+    hamburger.classList.toggle('active');
+
+    // Проверяем, открыто ли меню
+    if (menu.style.visibility === 'visible') {
+        menu.style.opacity = '0';
+        menu.style.transform = 'translateY(-100%)';
+        menu.style.visibility = 'hidden';
+    } else {
+        menu.style.visibility = 'visible';
+        setTimeout(() => {
+            menu.style.opacity = '1';
+            menu.style.transform = 'translateY(0)';
+        }, 10); // Небольшая задержка для плавного появления
+    }
+}
+
+    </script>
+    <style>
+        body {
+            /*background-color: rgb(0, 0, 0);*/
+            background-color: whitesmoke;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: blue;
+            text-align: center;
+        }
+
+        h3 {
+            color: #57B1F6;
+            text-align: center;
+        }
+
+        p {
+            color: black;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #39AAFF; /* Синий цвет */
+            color: white; /* Белый текст */
+            padding: 10px 20px; /* Отступы */
+            border: none; /* Убираем рамку */
+            border-radius: 25px; /* Закругленные углы */
+            text-decoration: none; /* Убираем подчеркивание */
+            display: inline-block; /* Для корректного отображения */
+            margin-top: 20px; /* Отступ сверху */
+            text-align: center;
+            transition: transform 0.6s; /* Плавный переход для трансформации */
+            perspective: 1000px; /* Устанавливаем перспективу для 3D эффекта */
+        }
+        .profbutton {
+            background-color: #98A3FF; /* Синий цвет */
+            color: white; /* Белый текст */
+            padding: 10px 20px; /* Отступы */
+            border: none; /* Убираем рамку */
+            border-radius: 15px; /* Закругленные углы */
+            text-decoration: none; /* Убираем подчеркивание */
+            display: inline-block; /* Для корректного отображения */
+            margin-top: 20px; /* Отступ сверху */
+            text-align: center;
+        }
+        .button:hover {
+            transform: rotateY(360deg);/* Переворот по оси Y при наведении */
+        }
+
+        .hamburger {
+            position: fixed; /* Фиксированное положение */
+            top: 20px; /* Отступ сверху */
+            right: 20px; /* Отступ справа */
+            cursor: pointer; /* Указатель при наведении */
+            z-index: 1001; /* Убедитесь, что кнопка выше других элементов */
+            display: flex;
+            flex-direction: column;
+            width: 30px;
+            margin: 20px;
+            transition: transform 0.3s;
+        }
+
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: black;
+            margin: 3px 0;
+        }
+
+        .menu {
+            display: flex; /* Измените на flex, чтобы использовать opacity */
+            opacity: 0; /* Начальное состояние - скрыто */
+            transform: translateY(-100%); /* Начальная позиция - выше экрана */
+            transition: opacity 1s ease, transform 1s ease; /* Плавный переход для opacity и transform */
+            position: fixed; /* Изменено на fixed, чтобы оставаться на месте */
+            top: 0; /* Позиция меню */
+            left: 0;
+            right: 0;
+            height: 50vh;
+            background-color: yellow;
+            border-radius: 0 0 50% 50%;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Вертикальное выравнивание */
+            visibility: hidden; /* Скрыто по умолчанию */
+            z-index: 1000; /* Убедитесь, что меню ниже гамбургера */
+        }
+
+        .menu a {
+            padding: 15px;
+            cursor: pointer;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .menu a:hover {
+            background-color: #ffdf61; /* Цвет при наведении */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            z-index: 1; /* Убедитесь, что кнопка закрытия выше других элементов */
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px); /* Первая полоска поворачивается и смещается */
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0; /* Вторая полоска исчезает */
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px); /* Третья полоска поворачивается и смещается */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px; /* Установите нужную ширину */
+            height: auto; /* Сохраняет пропорции изображения */
+            margin-right: 20px; /* Отступ между логотипом и гамбургером */
+        }
+        input {
+            margin-top: 1rem;
+        }
+
+        input::file-selector-button {
+            font-weight: bold;
+            color: white;
+            background-color:rgb(255, 55, 88);
+            padding: 0.5em;
+            border: thin solid grey;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="static/img/ULC.png" alt="Логотип" class="logo">
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</div>
+<div class="menu" id="menu">
+    <a href="index.html">Главная</a>
+    <a href="order.html">Заказать</a>
+    <a href="about.html">О нас</a>
+    <a href="prof.html">Профиль</a>
+</div>
+<div class="profile">
+    <h2>Ваш профиль:</h2>
+    <img id="avatar-display" class="avatar" src="" alt="Аватар">
+    <input type="file" accept="image/*" onchange="changeAvatar(event)" style="margin-top: 10px;">
+    <p><strong>Имя пользователя:</strong> <span id="username-display"></span></p>
+    <p><strong>Электронная почта:</strong> <span id="email-display"></span></p>
+    <button class="button" onclick="deleteAccount()">Удалить аккаунт</button>
+    <button class="profbutton" onclick="showOrders()">Мои заказы</button>
+    <div class="orders" id="orders-display"></div>
+</div>
+</body>
+</html>

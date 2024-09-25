@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/style1.css">
+    <script src="static/js/index1.js" defer></script>
+    <link rel="stylesheet" href="static/css/style.css">
+    <title>Мои заказы - UralLogisCorp</title>
+    <style>
+        .order-item {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: whitesmoke;
+            color: black;
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const hamburger = document.getElementById('hamburger');
+
+            // Переключаем класс 'active' для гамбургера
+            hamburger.classList.toggle('active');
+
+            // Проверяем, открыто ли меню
+            if (menu.style.visibility === 'visible') {
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(-100%)';
+                menu.style.visibility = 'hidden';
+            } else {
+                menu.style.visibility = 'visible';
+                setTimeout(() => {
+                    menu.style.opacity = '1';
+                    menu.style.transform = 'translateY(0)';
+                }, 10); // Небольшая задержка для плавного появления
+            }
+        }
+
+        function displayOrders() {
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const resultContainer = document.getElementById('orderDetails');
+
+            if (orders.length > 0) {
+                orders.forEach(orderData => {
+                    const orderItem = document.createElement('div');
+                    orderItem.className = 'order-item';
+                    orderItem.innerHTML = `
+                        <h2>Детали заказа</h2>
+                        <p><strong>Вес груза:</strong> ${orderData.weight} кг</p>
+                        <p><strong>Адрес отправки:</strong> ${orderData.fromAddress}</p>
+                        <p><strong>Адрес доставки:</strong> ${orderData.toAddress}</p>
+                        <p><strong>Цена:</strong> ${orderData.price} руб.</p>
+                        <p><strong>Расстояние:</strong> ${orderData.distance} км</p>
+                    `;
+                    resultContainer.appendChild(orderItem);
+                });
+            } else {
+                resultContainer.innerHTML = '<p>Нет данных о заказах.</p>';
+            }
+        }
+
+        window.onload = function() {
+            displayOrders();
+        };
+    </script>
+    <style>
+        body {
+            background-color: whitesmoke;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: blue;
+            text-align: center;
+        }
+
+        h2 {
+            color: green;
+            text-align: center;
+        }
+
+        p {
+            color: #57B1F6;
+            text-align: center;
+        }
+
+        .button {
+            background-color: blue; /* Синий цвет */
+            color: white; /* Белый текст */
+            padding: 10px 20px; /* Отступы */
+            border: none; /* Убираем рамку */
+            border-radius: 25px; /* Закругленные углы */
+            text-decoration: none; /* Убираем подчеркивание */
+            display: inline-block; /* Для корректного отображения */
+            margin-top: 20px; /* Отступ сверху */
+            text-align: center;
+            transition: transform 0.6s; /* Плавный переход для трансформации */
+            perspective: 1000px; /* Устанавливаем перспективу для 3D эффекта */
+        }
+        .button:hover {
+            transform: rotateY(360deg); /* Переворот по оси Y при наведении */
+        }
+
+        .hamburger {
+            position: fixed; /* Фиксированное положение */
+            top: 20px; /* Отступ сверху */
+            right: 20px; /* Отступ справа */
+            cursor: pointer; /* Указатель при наведении */
+            z-index: 1001; /* Убедитесь, что кнопка выше других элементов */
+            display: flex;
+            flex-direction: column;
+            width: 30px;
+            margin: 20px;
+            transition: transform 0.3s;
+        }
+
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: black;
+            margin: 3px 0;
+        }
+
+        .menu {
+            display: flex; /* Измените на flex, чтобы использовать opacity */
+            opacity: 0; /* Начальное состояние - скрыто */
+            transform: translateY(-100%); /* Начальная позиция - выше экрана */
+            transition: opacity 1s ease, transform 1s ease; /* Плавный переход для opacity и transform */
+            position: fixed; /* Изменено на fixed, чтобы оставаться на месте */
+            top: 0; /* Позиция меню */
+            left: 0;
+            right: 0;
+            height: 50vh;
+            background-color: yellow;
+            border-radius: 0 0 50% 50%;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Вертикальное выравнивание */
+            visibility: hidden; /* Скрыто по умолчанию */
+            z-index: 1000; /* Убедитесь, что меню ниже гамбургера */
+        }
+
+        .menu a {
+            padding: 15px;
+            cursor: pointer;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .menu a:hover {
+            background-color: #ffdf61; /* Цвет при наведении */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            z-index: 1; /* Убедитесь, что кнопка закрытия выше других элементов */
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px); /* Первая полоска поворачивается и смещается */
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0; /* Вторая полоска исчезает */
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px); /* Третья полоска поворачивается и смещается */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px; /* Установите нужную ширину */
+            height: auto; /* Сохраняет пропорции изображения */
+            margin-right: 20px; /* Отступ между логотипом и гамбургером */
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="static/img/ULC.png" alt="Логотип" class="logo">
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</div>
+<div class="menu" id="menu">
+    <a href="index.html">Главная</a>
+    <a href="order.html">Заказать</a>
+    <a href="about.html">О нас</a>
+    <a href="prof.html">Профиль</a>
+</div>
+
+<h1>Мои заказы</h1>
+<div id="orderDetails"></div>
+</body>
+</html>

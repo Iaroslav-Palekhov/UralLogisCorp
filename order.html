@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UralLogisCorp</title>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=Youre api key&lang=ru_RU" type="text/javascript"></script>
+    <link rel="stylesheet" href="static/css/style1.css">
+    <script src="static/js/index1.js" defer></script>
+    <script>
+        let myMap;
+        let markers = [];
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const hamburger = document.getElementById('hamburger');
+
+            hamburger.classList.toggle('active');
+
+            if (menu.style.visibility === 'visible') {
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(-100%)';
+                menu.style.visibility = 'hidden';
+            } else {
+                menu.style.visibility = 'visible';
+                setTimeout(() => {
+                    menu.style.opacity = '1';
+                    menu.style.transform = 'translateY(0)';
+                }, 10);
+            }
+        }
+
+        function initMap() {
+            myMap = new ymaps.Map("map", {
+                center: [53.629959, 55.934464],
+                zoom: 10
+            });
+
+            myMap.events.add('click', function (e) {
+                if (markers.length < 2) {
+                    const coords = e.get('coords');
+                    addMarker(coords);
+                }
+            });
+        }
+
+        function addMarker(coords) {
+            const marker = new ymaps.Placemark(coords, {}, {
+                preset: 'islands#icon',
+                iconColor: '#0095b6'
+            });
+            myMap.geoObjects.add(marker);
+            markers.push(marker);
+        }
+
+        function resetMarkers() {
+            myMap.geoObjects.removeAll();
+            markers = [];
+        }
+
+        function calculatePrice(weight) {
+            const basePrice = 100; // базовая цена
+            const pricePerKg = 30; // цена за килограмм
+            return basePrice + (weight * pricePerKg);
+        }
+
+        function order() {
+    const weight = document.getElementById('weight').value;
+    const fromAddress = document.getElementById('fromAddress').value;
+    const toAddress = document.getElementById('toAddress').value;
+    const distance = document.getElementById('distance').value;
+
+    if (weight && fromAddress && toAddress && distance) {
+        const price = calculatePrice(weight);
+        const increasedDistance = distance * 1.2; // Увеличиваем расстояние на 20%
+        const orderData = {
+            weight: weight,
+            fromAddress: fromAddress,
+            toAddress: toAddress,
+            distance: increasedDistance, // Сохраняем увеличенное расстояние
+            price: price
+        };
+
+        // Сохранение данных в массив заказов в localStorage
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.push(orderData);
+        localStorage.setItem('orders', JSON.stringify(orders));
+
+        // Перенаправление на страницу myorder.html
+        window.location.href = 'myorder.html';
+    } else {
+        alert('Пожалуйста, заполните все поля.');
+    }
+}
+
+        window.onload = function() {
+            ymaps.ready(initMap);
+        };
+    </script>
+    <style>
+        body {
+            /*background-color: rgb(0, 0, 0);*/
+            background-color: whitesmoke;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: blue;
+            text-align: center;
+        }
+
+        h3 {
+            color: #57B1F6;
+            text-align: center;
+        }
+
+        p {
+            color: #9494FF;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #39AAFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            transition: transform 0.6s;
+            perspective: 1000px;
+        }
+        .button:hover {
+            transform: rotateY(360deg);
+        }
+        #map {
+            width: 300px;
+            height: 400px;
+            margin: 20px auto;
+        }
+
+        .menu {
+            display: flex;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: opacity 1s ease, transform 1s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50vh;
+            background-color: yellow;
+            border-radius: 0 0 50% 50%;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+        .menu a {
+            padding: 15px;
+            cursor: pointer;
+            color: black;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .menu a:hover {
+            background-color: #ffdf61;
+        }
+
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            width: 30px;
+            margin: 20px;
+            transition: transform 0.3s;
+        }
+
+        .bar {
+            height: 4px;
+            width: 100%;
+            background-color: black;
+            margin: 3px 0;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        .label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="static/img/ULC.png" alt="Логотип" class="logo">
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+</div>
+<div class="menu" id="menu">
+    <a href="index.html">Главная</a>
+    <a href="order.html">Заказать</a>
+    <a href="about.html">О нас</a>
+    <a href="prof.html">Профиль</a>
+</div>
+<h1>Калькулятор</h1>
+<h1>стоимости доставки</h1>
+<label class="label" for="weight">Вес груза (в килограммах):</label>
+<input type="number" id="weight" placeholder="Введите вес груза" required>
+<label class="label" for="fromAddress">Город и адрес отправки:</label>
+<input type="text" id="fromAddress" placeholder="Введите адрес отправки" required>
+<label class="label" for="toAddress">Город и адрес доставки:</label>
+<input type="text" id="toAddress" placeholder="Введите адрес доставки" required>
+<label class="label" for="distance">Расстояние (в километрах):</label>
+<input type="number" id="distance" placeholder="Введите расстояние" required>
+<br>
+<button class="button" onclick="order()">Заказать</button>
+<button class="button" onclick="resetMarkers()">Сбросить маркеры</button>
+<button class="button" onclick="alert('Чтобы узнать расстояние между городами используйте линейку и укажите расстояние которое будет показано.')">Как узнать расстояние?</button>
+<p id="result"></p>
+
+<div id="map"></div>
+</body>
+</html>
